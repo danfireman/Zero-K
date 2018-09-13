@@ -1,8 +1,6 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-if not gadgetHandler:IsSyncedCode() then
-	return
-end
+if gadgetHandler:IsSyncedCode() then
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -370,4 +368,25 @@ function gadget:Initialize()
 	end
 
 	GG.Lagmonitor = externalFunctions
+end
+
+else -- unsynced
+	local function TeamAfked(cmd, arg1, arg2)
+		if not Script.LuaUI(cmd) then
+			return
+		end
+		Script.LuaUI[cmd](arg1, arg2)
+	end
+
+	function gadget:Initialize()
+		gadgetHandler:AddSyncAction("TeamAfked",   WrapToLuaUI)
+		gadgetHandler:AddSyncAction("TeamTaken",   WrapToLuaUI)
+		gadgetHandler:AddSyncAction("TeamUnafked", WrapToLuaUI)
+	end
+
+	function gadget:Shutdown()
+		gadgetHandler:RemoveSyncAction("TeamAfked")
+		gadgetHandler:RemoveSyncAction("TeamTaken")
+		gadgetHandler:RemoveSyncAction("TeamUnafked")
+	end
 end
