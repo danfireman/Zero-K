@@ -371,7 +371,7 @@ function gadget:Initialize()
 end
 
 else -- unsynced
-	local function TeamAfked(cmd, arg1, arg2)
+	local function WrapToLuaUI(cmd, arg1, arg2)
 		if not Script.LuaUI(cmd) then
 			return
 		end
