@@ -109,7 +109,7 @@ end
 
 local mouseActivityTime = {}
 
-function gadget:RecvLuaMsg(msg, playerID)
+local function CheckMouseActivity(msg, playerID)
 	if msg:find("AFK",1,true) then
 		mouseActivityTime[playerID] = tonumber(msg:sub(4))
 	end
@@ -255,7 +255,7 @@ local function GiveAwayTeam(giveTeamID, receiveTeamID)
 	local giveName = GetTeamName(giveTeamID)
 	local giveResigned = select(3, Spring.GetTeamInfo(giveTeamID))
 
-	-- Send message (TODO: turn into luaui event)
+	-- SendToUnsynced("TeamTaken", giveTeamID, receiveTeamID)
 	if giveResigned then
 		spEcho("game_message: " .. giveName .. " resigned, giving all units to " .. receiveName)
 	elseif #units > 0 then
@@ -263,7 +263,7 @@ local function GiveAwayTeam(giveTeamID, receiveTeamID)
 	end
 end
 
-function gadget:RecvLuaMsg(msg, playerID)
+local function CheckTake(msg, playerID)
 	local _, _, isSpec, teamID, allyTeamID = Spring.GetPlayerInfo(playerID)
 	if msg ~= "afk_take" or isSpec then
 		return
@@ -277,6 +277,11 @@ function gadget:RecvLuaMsg(msg, playerID)
 			GiveAwayTeam(giveTeamID, teamID)
 		end
 	end
+end
+
+function gadget:RecvLuaMsg(msg, playerID)
+	CheckMouseActivity(msg, playerID)
+	CheckTake(msg, playerID)
 end
 
 local function UpdateAllyTeamActivity(allyTeamID)
