@@ -41,7 +41,7 @@ unitDef = {
   maxVelocity            = 2.75,
   minCloakDistance       = 75,
   minWaterDepth          = 10,
-  movementClass          = [[BOAT10]],
+  movementClass          = [[TKBOT4]],
   objectName             = [[shipcarrier.dae]],
   script                 = [[shipcarrier.lua]],
   radarEmitHeight        = 48,
@@ -73,11 +73,40 @@ unitDef = {
       badTargetCategory  = [[SWIM LAND SUB SHIP HOVER]],
       onlyTargetCategory = [[SWIM LAND SUB SINK TURRET FLOAT SHIP HOVER]],
     },
-	
+
+    {
+      def = [[COR_SHIELD_SMALL]],
+    },
   },
 
   weaponDefs             = {
 
+    COR_SHIELD_SMALL = {
+      name                    = [[Energy Shield]],
+
+      damage                  = {
+        default = 10,
+      },
+
+      exteriorShield          = true,
+      shieldAlpha             = 0.2,
+      shieldBadColor          = [[1 0.1 0.1 1]],
+      shieldGoodColor         = [[0.1 0.1 1 1]],
+      shieldInterceptType     = 3,
+      shieldPower             = 3600,
+      shieldPowerRegen        = 50,
+      shieldPowerRegenEnergy  = 12,
+      shieldRadius            = 100,
+      shieldRepulser          = false,
+      smartShield             = true,
+      visibleShield           = false,
+      visibleShieldRepulse    = false,
+      --texture1                = [[shield3mist]],
+      --visibleShield           = true,
+      --visibleShieldHitFrames  = 4,
+      --visibleShieldRepulse    = true,
+      weaponType              = [[Shield]],
+    },
 	DISARM_ROCKET        = {
       name                    = [[Disarm Missile]],
       areaOfEffect            = 280,
